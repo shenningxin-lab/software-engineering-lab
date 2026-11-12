@@ -1,0 +1,68 @@
+@startuml
+skinparam defaultFontName "Microsoft YaHei"
+skinparam classAttributeIconSize 0
+
+abstract class User {
+  -id
+  -username
+  -password
+  -phone
+}
+class Customer
+class Merchant
+class Courier
+class Admin
+
+class Shop {
+  -name
+  -address
+  -status
+}
+class Dish {
+  -name
+  -flavor
+  -price
+  -stock
+  -onSale
+}
+class CartItem {
+  -customerId
+  -dishId
+  -flavor
+  -quantity
+}
+class Order {
+  -orderNo
+  -status
+  -totalAmount
+}
+class OrderItem {
+  -dishName
+  -flavor
+  -unitPrice
+  -quantity
+}
+class DeliveryTask {
+  -status
+}
+class AuditLog {
+  -action
+  -time
+}
+
+User <|-- Customer
+User <|-- Merchant
+User <|-- Courier
+User <|-- Admin
+
+Merchant "1" -- "1" Shop : 管理
+Shop "1" -- "*" Dish : 菜品
+Customer "1" -- "*" CartItem : 购物车
+CartItem "*" -- "1" Dish : 引用
+Customer "1" -- "*" Order : 下单
+Order "1" -- "*" OrderItem : 明细
+OrderItem "*" -- "1" Dish : 价格快照
+Order "1" -- "0..1" DeliveryTask : 履约
+Courier "1" -- "*" DeliveryTask : 配送
+AuditLog "*" -- "1" User : 操作人
+@enduml

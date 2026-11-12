@@ -1,0 +1,41 @@
+@startuml
+skinparam defaultFontName "Microsoft YaHei"
+
+package "表现层" {
+  component "顾客端" as UI_C
+  component "商家端" as UI_M
+  component "配送端" as UI_D
+  component "管理员端" as UI_A
+}
+package "业务层" {
+  component "M1 用户认证" as M1
+  component "M2 店铺菜品" as M2
+  component "M3 浏览购物车" as M3
+  component "M4 订单结算" as M4
+  component "M5 履约配送" as M5
+  component "M6 状态退款" as M6
+  component "M7 查询审计" as M7
+}
+database "数据库" as DB
+
+UI_C --> M3
+UI_C --> M4
+UI_M --> M2
+UI_M --> M4
+UI_M --> M5
+UI_M --> M7
+UI_D --> M5
+UI_A --> M1
+UI_A --> M7
+
+M4 --> M6
+M5 --> M6
+
+M1 --> DB
+M2 --> DB
+M3 --> DB
+M4 --> DB
+M5 --> DB
+M6 --> DB
+M7 --> DB
+@enduml

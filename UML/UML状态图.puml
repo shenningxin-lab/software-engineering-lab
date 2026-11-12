@@ -1,0 +1,24 @@
+@startuml
+skinparam defaultFontName "Microsoft YaHei"
+
+state "待付款" as s1
+state "待接单" as s2
+state "制作中" as s3
+state "待配送" as s4
+state "配送中" as s5
+state "已完成" as s6
+state "已取消" as s7
+
+[*] --> s1 : 下单
+s1 --> s2 : 支付
+s1 --> s7 : 取消
+s2 --> s3 : 接单
+s2 --> s7 : 拒单
+s3 --> s4 : 制作完成
+s4 --> s5 : 取餐
+s4 --> s7 : 取消
+s5 --> s6 : 送达
+s5 --> s7 : 配送失败
+s6 --> [*]
+s7 --> [*]
+@enduml
