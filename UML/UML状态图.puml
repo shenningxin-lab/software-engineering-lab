@@ -1,5 +1,10 @@
 @startuml
 skinparam defaultFontName "Microsoft YaHei"
+skinparam shadowing false
+skinparam dpi 150
+left to right direction
+skinparam stateBackgroundColor #FFF7F3
+skinparam stateBorderColor #E8482A
 
 state "待付款" as s1
 state "待接单" as s2
@@ -11,12 +16,13 @@ state "已取消" as s7
 
 [*] --> s1 : 下单
 s1 --> s2 : 支付
-s1 --> s7 : 取消
+s1 --> s7 : 超时未付/用户取消
 s2 --> s3 : 接单
-s2 --> s7 : 拒单
+s2 --> s7 : 拒单/用户取消
 s3 --> s4 : 制作完成
+s3 --> s7 : 缺货取消
 s4 --> s5 : 取餐
-s4 --> s7 : 取消
+s4 --> s7 : 商家/管理员确认无法履约
 s5 --> s6 : 送达
 s5 --> s7 : 配送失败
 s6 --> [*]

@@ -1,12 +1,16 @@
 @startuml
 skinparam defaultFontName "Microsoft YaHei"
+skinparam shadowing false
+skinparam dpi 150
 skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #FFF7F3
+skinparam classBorderColor #D9875F
+skinparam linetype ortho
 
 abstract class User {
-  -id
-  -username
-  -password
-  -phone
+  -用户名
+  -密码
+  -电话
 }
 class Customer
 class Merchant
@@ -14,40 +18,33 @@ class Courier
 class Admin
 
 class Shop {
-  -name
-  -address
-  -status
+  -店名
+  -地址
+  -营业状态
 }
 class Dish {
-  -name
-  -flavor
-  -price
-  -stock
-  -onSale
+  -名称
+  -价格
+  -库存
 }
 class CartItem {
-  -customerId
-  -dishId
-  -flavor
-  -quantity
+  -菜品
+  -口味
+  -数量
 }
 class Order {
-  -orderNo
-  -status
-  -totalAmount
+  -订单号
+  -状态
+  -金额
 }
 class OrderItem {
-  -dishName
-  -flavor
-  -unitPrice
-  -quantity
+  -菜品名
+  -口味
+  -单价
+  -数量
 }
 class DeliveryTask {
-  -status
-}
-class AuditLog {
-  -action
-  -time
+  -状态
 }
 
 User <|-- Customer
@@ -55,14 +52,14 @@ User <|-- Merchant
 User <|-- Courier
 User <|-- Admin
 
-Merchant "1" -- "1" Shop : 管理
-Shop "1" -- "*" Dish : 菜品
-Customer "1" -- "*" CartItem : 购物车
-CartItem "*" -- "1" Dish : 引用
-Customer "1" -- "*" Order : 下单
-Order "1" -- "*" OrderItem : 明细
-OrderItem "*" -- "1" Dish : 价格快照
-Order "1" -- "0..1" DeliveryTask : 履约
-Courier "1" -- "*" DeliveryTask : 配送
-AuditLog "*" -- "1" User : 操作人
+Merchant "1" -- "1" Shop
+Shop "1" -- "*" Dish
+Shop "1" -- "*" Order
+Customer "1" -- "*" CartItem
+CartItem "*" -- "1" Dish
+Customer "1" -- "*" Order
+Order "1" -- "*" OrderItem
+OrderItem "*" -- "1" Dish
+Order "1" -- "0..1" DeliveryTask
+Courier "1" -- "*" DeliveryTask
 @enduml

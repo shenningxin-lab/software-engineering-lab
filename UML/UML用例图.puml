@@ -1,40 +1,39 @@
 @startuml
 skinparam defaultFontName "Microsoft YaHei"
+skinparam shadowing false
+skinparam dpi 150
 left to right direction
+skinparam actorBackgroundColor #FCE4DC
+skinparam actorBorderColor #E8482A
+skinparam usecaseBackgroundColor #FFFFFF
 
 actor "顾客" as C
 actor "商家" as M
 actor "配送员" as D
 actor "管理员" as A
 
-usecase "登录" as UC0
-usecase "浏览菜品" as UC1
-usecase "购物车" as UC2
-usecase "下单支付" as UC3
-usecase "查看/取消订单" as UC4
-usecase "店铺与菜品管理" as UC5
-usecase "接单制作" as UC6
-usecase "派单" as UC7
-usecase "查询与统计" as UC8
-usecase "取餐配送" as UC9
-usecase "账号管理" as UC10
+rectangle "外卖点餐与配送系统" {
+  usecase "登录/注册" as UC1
+  usecase "浏览与购物车" as UC2
+  usecase "下单支付" as UC3
+  usecase "查看/取消订单" as UC4
+  usecase "店铺菜品管理" as UC5
+  usecase "接单制作派单" as UC6
+  usecase "查询统计" as UC7
+  usecase "取餐配送" as UC8
+  usecase "账号与订单管理" as UC9
+}
 
-C --> UC0
-M --> UC0
-D --> UC0
-A --> UC0
-
-C --> UC1
-C --> UC2
-C --> UC3
-C --> UC4
-
-M --> UC5
-M --> UC6
-M --> UC7
-M --> UC8
-
-D --> UC9
-
-A --> UC10
+C -- UC1
+C -- UC2
+C -- UC3
+C -- UC4
+M -- UC1
+M -- UC5
+M -- UC6
+M -- UC7
+D -- UC1
+D -- UC8
+A -- UC1
+A -- UC9
 @enduml

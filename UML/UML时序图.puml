@@ -1,5 +1,7 @@
 @startuml
 skinparam defaultFontName "Microsoft YaHei"
+skinparam shadowing false
+skinparam dpi 150
 
 actor "顾客" as U
 participant "前端" as F
@@ -7,13 +9,16 @@ participant "订单服务" as O
 database "数据库" as DB
 
 U -> F : 提交订单
-F -> O : 下单请求(购物车/地址)
-O -> DB : 校验库存与营业状态
-O -> DB : 服务端核价
-O -> DB : 创建订单并扣减库存
-O -> F : 返回订单(待付款)
+F -> O : 下单请求
+O -> DB : 查询价格与库存
+DB --> O : 返回
+O -> O : 服务端核价
+O -> DB : 创建订单并扣库存
+O --> F : 返回订单（待付款）
 U -> F : 支付
-F -> O : 支付请求
-O -> DB : 订单状态 → 待接单
-O -> F : 支付成功
+F -> O : 支付确认
+O -> O : 状态机校验：待付款→待接单
+O -> DB : 更新订单状态
+O --> F : 支付成功
+note right of O : 模拟支付：服务端校验订单归属、金额、状态后记录支付成功
 @enduml

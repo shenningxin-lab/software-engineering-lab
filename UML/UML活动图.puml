@@ -1,5 +1,8 @@
 @startuml
 skinparam defaultFontName "Microsoft YaHei"
+skinparam shadowing false
+skinparam dpi 150
+title 下单与履约主流程
 start
 :浏览菜品，加入购物车;
 :提交订单;
@@ -10,13 +13,8 @@ else (是)
   :生成订单（待付款）;
 endif
 :支付;
-if (支付成功?) then (否)
-  :自动取消;
-  stop
-else (是)
-  :商家接单 → 制作 → 派单;
-endif
-:配送员取餐 → 送达;
+:商家接单、制作、派单;
+:配送员取餐、送达;
 :订单完成;
 stop
 @enduml
